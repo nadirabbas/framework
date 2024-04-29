@@ -13,6 +13,8 @@ trait InteractsWithSockets
      */
     public $socket;
 
+    public array $specific = [];
+
     /**
      * Exclude the current user from receiving the broadcast.
      *
@@ -22,6 +24,12 @@ trait InteractsWithSockets
     {
         $this->socket = Broadcast::socket();
 
+        return $this;
+    }
+
+    public function broadcastToSpecific(array $ids)
+    {
+        $this->specific = $ids;
         return $this;
     }
 

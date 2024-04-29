@@ -3,6 +3,7 @@
 namespace Illuminate\Broadcasting;
 
 use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Support\Arr;
 
 class PendingBroadcast
 {
@@ -57,6 +58,17 @@ class PendingBroadcast
     {
         if (method_exists($this->event, 'dontBroadcastToCurrentUser')) {
             $this->event->dontBroadcastToCurrentUser();
+        }
+
+        return $this;
+    }
+
+    public function toSpecific($id)
+    {
+        $ids = Arr::wrap($id);
+
+        if (method_exists($this->event, 'broadcastToSpecific')) {
+            $this->event->broadcastToSpecific($ids);
         }
 
         return $this;
